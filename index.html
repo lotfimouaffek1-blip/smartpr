@@ -1946,7 +1946,30 @@ window.setLang = function(lang,el){
   if(document.readyState!=='loading') setTimeout(syncFinal,20);
 })();
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDF4ySJte7bTAjQoc9PkHmszYDp5FRe3IY",
+  authDomain: "dovlim-smart-pro.firebaseapp.com",
+  databaseURL: "https://dovlim-smart-pro-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "dovlim-smart-pro",
+  storageBucket: "dovlim-smart-pro.firebasestorage.app",
+  messagingSenderId: "941701677770",
+  appId: "1:941701677770:web:9cdabbe885589db6bd2a33",
+  measurementId: "G-CQP9LGKKXX"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+db.ref("device/test").set({
+  app: "dovlim",
+  status: "connected",
+  time: new Date().toISOString()
+});
+</script>
 </body>
 
 </html>
