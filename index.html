@@ -1964,10 +1964,58 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-db.ref("device/test").set({
-  app: "dovlim",
-  status: "connected",
-  time: new Date().toISOString()
+const deviceRef = db.ref("device");
+
+deviceRef.once("value").then(function(snapshot) {
+  if (!snapshot.exists()) {
+    deviceRef.set({
+      status: {
+        online: true,
+        appConnected: true,
+        firmware: "8.1.2",
+        battery: 78,
+        wifi: -55,
+        lastUpdate: new Date().toISOString()
+      },
+      water: {
+        grams: 720,
+        percent: 72,
+        low: false,
+        pumpRunning: false
+      },
+      food: {
+        grams: 350,
+        percent: 45,
+        low: false,
+        seedType: "not_set"
+      },
+      cage: {
+        temperature: 25,
+        humidity: 71
+      },
+      box: {
+        temperature: 23,
+        humidity: 48
+      },
+      schedule: {
+        meal1: { time: "08:00", grams: 2.5, enabled: true },
+        meal2: { time: "12:30", grams: 2.0, enabled: true },
+        meal3: { time: "17:00", grams: 2.5, enabled: true },
+        meal4: { time: "21:00", grams: 1.5, enabled: false }
+      },
+      commands: {
+        feedNow: false,
+        feedGrams: 0,
+        updatedAt: ""
+      },
+      notifications: {
+        last: ""
+      }
+    });
+  } else {
+    deviceRef.child("status/appConnected").set(true);
+    deviceRef.child("status/lastUpdate").set(new Date().toISOString());
+  }
 });
 </script>
 </body>
