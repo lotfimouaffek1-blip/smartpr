@@ -1965,7 +1965,10 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 const deviceRef = db.ref("device");
-
+const statusRef = deviceRef.child("status");
+const waterRef = deviceRef.child("water");
+const foodRef = deviceRef.child("food");
+const commandsRef = deviceRef.child("commands");
 deviceRef.once("value").then(function(snapshot) {
   if (!snapshot.exists()) {
     deviceRef.set({
